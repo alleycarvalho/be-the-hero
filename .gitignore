@@ -1,0 +1,12 @@
+# Node modules
+node_modules
+
+# Others
+.DS_Store
+.log
+
+# Lerna debug
+lerna-debug.log
+
+# Lerna libs packages
+packages/*/lib
