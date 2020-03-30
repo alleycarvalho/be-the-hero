@@ -11,8 +11,9 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean && rm -rf ./node_modules && rm yarn.lock",
-    "dev:all": "lerna run start",
-    "dev:backend": "lerna run --scope @be-the-hero/backend start"
+    "dev:all": "lerna run start --stream",
+    "dev:backend": "lerna run start --scope @be-the-hero/backend --stream",
+    "test": "lerna run test --stream"
   },
   "husky": {
     "hooks": {
