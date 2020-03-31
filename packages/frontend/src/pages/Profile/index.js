@@ -36,14 +36,14 @@ export default function Profile() {
     <div className="profile-container">
       <header>
         <img src={logoImg} alt="Be The Hero" />
-        <span>Bem-vinda, ONG!</span>
+        <span>Bem-vinda, <b style={{ color: "#E02041" }}>ONG</b>!</span>
 
         <Link to="/incidents/new" className="button">
           Cadastrar novo caso
         </Link>
 
         <button type="button">
-          <FiPower size={18} color="E02041" />
+          <FiPower size={18} color="#E02041" />
         </button>
       </header>
 

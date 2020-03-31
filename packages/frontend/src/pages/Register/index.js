@@ -20,7 +20,7 @@ export default function Register() {
           </p>
 
           <Link to="/" className="back-link">
-            <FiArrowLeft size={16} color="E02041" />
+            <FiArrowLeft size={16} color="#E02041" />
             Voltar para o login
           </Link>
         </section>
