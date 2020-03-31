@@ -1,6 +1,6 @@
 import React from 'react';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Image, Text, TouchableOpacity, Linking } from 'react-native';
 import * as MailComposer from 'expo-mail-composer';
 
@@ -10,20 +10,27 @@ import styles from './styles';
 
 export default function Details() {
   const navigation = useNavigation();
-  const message = 'Olá ONG, estou entrando em contato, pois gostaria de ajudar no caso "Título do caso" com o valor de R$ 120,00';
+  const route = useRoute();
+
+  const incident = route.params.incident;
+  const valueFormatted = Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(incident.value);
+  const message = `Olá ${incident.name}, estou entrando em contato, pois gostaria de ajudar no caso "${incident.title}" com o valor de ${valueFormatted}`;
 
   function navigateBack() {
     navigation.goBack();
   }
 
   function sendWhatsapp() {
-    Linking.openURL(`whatsapp://send?phone=34999999999&text=${message}`);
+    Linking.openURL(`whatsapp://send?phone=${incident.whatsapp}&text=${message}`);
   }
 
   function sendMail() {
     MailComposer.composeAsync({
-      subject: 'Herói do caso: Título do caso',
-      recipients: ['contato@gmail.com'],
+      subject: `Herói do caso: ${incident.title}`,
+      recipients: [incident.email],
       body: message,
     });
   }
@@ -50,21 +57,21 @@ export default function Details() {
           ONG:
         </Text>
         <Text style={styles.incidentValue}>
-          APAD
+          {incident.name} - {incident.city}/{incident.uf}
         </Text>
 
         <Text style={styles.incidentProperty}>
           CASO:
         </Text>
         <Text style={styles.incidentValue}>
-          Cadelinha atropelada na avenida.
+          {incident.title}
         </Text>
 
         <Text style={styles.incidentProperty}>
           VALOR:
         </Text>
         <Text style={styles.incidentValue}>
-          R$ 120,00
+          {valueFormatted}
         </Text>
       </View>
 
