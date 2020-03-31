@@ -11,6 +11,8 @@
   "main": "src/server.js",
   "scripts": {
     "start": "nodemon src/server.js",
+    "migrate": "knex migrate:latest",
+    "migrate:rollback:": "knex migrate:rollback",
     "test": "cross-env NODE_ENV=testing jest"
   },
   "dependencies": {
