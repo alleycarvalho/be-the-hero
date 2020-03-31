@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiPower, FiTrash2 } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 import api from '../../services/api';
 
@@ -33,9 +34,11 @@ export default function Profile() {
         }
       });
 
+      toast.success('Caso removido com sucesso!');
+
       setIncidents(incidents.filter(incident => incident.id !== id));
     } catch (err) {
-      alert('Erro ao remover, tente novamente.');
+      toast.error('Erro ao remover, tente novamente.');
     }
   }
 

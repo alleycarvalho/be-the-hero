@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiLogIn } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 import api from '../../services/api';
 
@@ -14,6 +15,14 @@ export default function Login() {
 
   const history = useHistory();
 
+  useEffect(() => {
+    const ongId = localStorage.getItem('ongId');
+
+    if (ongId) {
+      history.push('/profile');
+    }
+  }, [history]);
+
   async function handleLogin(e) {
     e.preventDefault();
 
@@ -25,7 +34,7 @@ export default function Login() {
 
       history.push('/profile');
     } catch (err) {
-      alert(`Falha no login, tente novamente.`);
+      toast.error("Falha no login, tente novamente.");
     }
   }
 
