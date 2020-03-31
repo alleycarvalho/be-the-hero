@@ -11,8 +11,9 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean && rm -rf ./node_modules && rm yarn.lock",
-    "dev:all": "lerna run start --stream",
+    "dev:all": "lerna run start",
     "dev:backend": "lerna run start --scope @be-the-hero/backend --stream",
+    "dev:frontend": "lerna run start --scope @be-the-hero/frontend",
     "test": "lerna run test --stream"
   },
   "husky": {
@@ -34,7 +35,13 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/jest",
+      "**/jest/**"
+    ]
+  }
 }
