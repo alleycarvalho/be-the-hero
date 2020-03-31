@@ -59,6 +59,8 @@
       "**/react-native-*/**",
       "**/expo",
       "**/expo/**",
+      "**/expo-*",
+      "**/expo-*/**",
       "**/@babel/core",
       "**/@babel/core/**"
     ]
