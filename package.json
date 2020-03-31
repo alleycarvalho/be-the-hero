@@ -16,7 +16,10 @@
     "dev:frontend": "lerna run start --ignore @be-the-hero/mobile",
     "dev:frontend:scope": "lerna run start --scope @be-the-hero/frontend",
     "dev:mobile": "lerna run start --ignore @be-the-hero/frontend --parallel",
-    "test": "lerna run test --stream"
+    "test": "npm-run-all --sequential test:backend test:frontend test:mobile",
+    "test:backend": "lerna run test --scope @be-the-hero/backend --stream",
+    "test:frontend": "lerna run test --scope @be-the-hero/frontend --stream",
+    "test:mobile": "lerna run test --scope @be-the-hero/mobile --stream"
   },
   "husky": {
     "hooks": {

@@ -3,8 +3,7 @@ node_modules
 
 # Others
 .DS_Store
-.log
-
+*.log
 *.sqlite
 
 # Lerna debug

@@ -15,7 +15,29 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
+    "test": "jest",
     "postinstall": "expo-yarn-workspaces postinstall"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "roots": [
+      "<rootDir>/tests/"
+    ],
+    "moduleNameMapper": {
+      "^~/(.*)": "<rootDir>/src/$1"
+    },
+    "testMatch": [
+      "**/tests/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[tj]s?(x)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "!src/services/api.js"
+    ],
+    "coverageDirectory": "coverage"
   },
   "dependencies": {
     "expo": "~36.0.0",
@@ -27,6 +49,8 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "babel-preset-expo": "~8.0.0",
-    "expo-yarn-workspaces": "^1.2.1"
+    "expo-yarn-workspaces": "^1.2.1",
+    "jest-expo": "^36.0.1",
+    "react-test-renderer": "^16.13.1"
   }
 }
