@@ -11,9 +11,11 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean && rm -rf ./node_modules && rm yarn.lock",
-    "dev:all": "lerna run start",
+    "dev:all": "npm-run-all --parallel dev:mobile dev:frontend:scope",
     "dev:backend": "lerna run start --scope @be-the-hero/backend --stream",
-    "dev:frontend": "lerna run start --scope @be-the-hero/frontend",
+    "dev:frontend": "lerna run start --ignore @be-the-hero/mobile",
+    "dev:frontend:scope": "lerna run start --scope @be-the-hero/frontend",
+    "dev:mobile": "lerna run start --ignore @be-the-hero/frontend --parallel",
     "test": "lerna run test --stream"
   },
   "husky": {
@@ -28,7 +30,9 @@
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "3.1.0",
     "husky": "^4.2.3",
-    "lerna": "^3.20.2"
+    "lerna": "^3.20.2",
+    "metro-config": "^0.59.0",
+    "npm-run-all": "^4.1.5"
   },
   "config": {
     "commitizen": {
@@ -41,7 +45,13 @@
     ],
     "nohoist": [
       "**/jest",
-      "**/jest/**"
+      "**/jest/**",
+      "**/react-native",
+      "**/react-native/**",
+      "**/expo",
+      "**/expo/**",
+      "**/@babel/core",
+      "**/@babel/core/**"
     ]
   }
 }
