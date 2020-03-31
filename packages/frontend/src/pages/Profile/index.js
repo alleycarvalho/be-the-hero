@@ -1,42 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiPower, FiTrash2 } from 'react-icons/fi';
+
+import api from '../../services/api';
 
 import './styles.css';
 
 import logoImg from '../../assets/logo.svg';
 
 export default function Profile() {
-  let rows = [];
+  const [incidents, setIncidents] = useState([]);
+  const ongId = localStorage.getItem('ongId');
+  const ongName = localStorage.getItem('ongName');
 
-  for (let i = 1; i < 5; i++) {
-    rows.push(i)
-  }
-
-  function renderRow(row) {
-    return (
-      <li>
-        <strong>CASO:</strong>
-        <p>Caso Teste {row}</p>
-
-        <strong>DESCRIÇÃO:</strong>
-        <p>Descrição teste do caso teste {row}.</p>
-
-        <strong>VALOR:</strong>
-        <p>R$ {row * 50},00</p>
-
-        <button type="button">
-          <FiTrash2 size={20} color="#A8A8B3" />
-        </button>
-      </li>
-    );
-  }
+  useEffect(() => {
+    api.get('profile', {
+      headers: {
+        Authorization: ongId
+      }
+    }).then(response => {
+      setIncidents(response.data)
+    });
+  }, [ongId]);
 
   return (
     <div className="profile-container">
       <header>
         <img src={logoImg} alt="Be The Hero" />
-        <span>Bem-vinda, <b style={{ color: "#E02041" }}>ONG</b>!</span>
+        <span>Bem-vinda, <b style={{ color: "#E02041" }}>{ongName}</b>!</span>
 
         <Link to="/incidents/new" className="button">
           Cadastrar novo caso
@@ -50,7 +41,22 @@ export default function Profile() {
       <h1>Casos cadastrados</h1>
 
       <ul>
-        {rows.map(renderRow)}
+        {incidents.map(incident => (
+          <li key={incident.id}>
+            <strong>CASO:</strong>
+            <p>{incident.title}</p>
+
+            <strong>DESCRIÇÃO:</strong>
+            <p>{incident.description}</p>
+
+            <strong>VALOR:</strong>
+            <p>R$ {incident.value},00</p>
+
+            <button type="button">
+              <FiTrash2 size={20} color="#A8A8B3" />
+            </button>
+          </li>
+        ))}
       </ul>
     </div>
   );
