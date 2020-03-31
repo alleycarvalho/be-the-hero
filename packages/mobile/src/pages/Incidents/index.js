@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { View, Image, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Image, Text, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import api from '../../services/api';
 
@@ -23,7 +23,11 @@ export default function Incidents() {
   }
 
   async function loadIncidents() {
-    if (loading || (total > 0 && incidents.length === total)) {
+    if (loading) {
+      return;
+    }
+
+    if (total > 0 && incidents.length >= total) {
       return;
     }
 
@@ -33,10 +37,11 @@ export default function Incidents() {
       params: { page }
     });
 
-    setLoanding(false);
-    setPage(page + 1);
     setIncidents([...incidents, ...response.data]);
     setTotal(response.headers['x-total-count']);
+
+    setPage(page + 1);
+    setLoanding(false);
   }
 
   useEffect(() => {
@@ -109,6 +114,15 @@ export default function Incidents() {
           </View>
         )}
       />
+
+      { loading &&
+        <ActivityIndicator
+          size="large"
+          color="#E02041"
+          animating={loading}
+          hidesWhenStopped
+        />
+      }
     </View>
   );
 }
